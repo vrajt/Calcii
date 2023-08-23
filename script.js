@@ -20,13 +20,9 @@ function removeLastChar() {
  }
 //function to calculate
 function calculate() {
-    let currentExpression = displayValue.split(/([+\-*/])/);  // it seperates numbers and expression
-    let result = parseFloat(currentExpression[0]);   //it initialize the result with firtst number
-
-//iterate through array for performing calculation
-    for (let i = 1; i < currentExpression.length; i += 2) {
-        let operator = currentExpression[i];
-        let operand = parseFloat(currentExpression[i + 1]);
+    if (firstOperand !== '' && displayValue !== '') {
+        secondOperand = displayValue;
+        let result = '';
 //to check if it is operator
         if (!isNaN(operand)) {
             switch (operator) {
