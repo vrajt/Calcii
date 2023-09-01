@@ -1,29 +1,56 @@
-let displayValue = '';// Variable to store the displayed value
+// Variable to store the displayed value
+let displayValue = ''; 
+// track if the last input was an operator
+let lastInputWasOperator = false; 
+//  track if calculation has been done
+let calculationDone = false; 
 
-function display(value) {     //Function to add value on display
-    displayValue += value;
+
+// Function to add value on display
+function display(value) {
+    if (calculationDone && !isNaN(value)) {
+        displayValue = value;
+        calculationDone = false;
+    } else if (lastInputWasOperator && isNaN(value)) {
+        displayValue = displayValue.slice(0, -1) + value;
+    } else {
+        displayValue += value;
+    }
+
+    lastInputWasOperator = isNaN(value) && value !== '.';
     updateDisplay();
 }
-//function to clear display
+
+// Function to clear display
 function clearDisplay() {
     displayValue = '';
     updateDisplay();
+    calculationDone = false; // Reset the flag
 }
-//fuction to remove a character
+
+// Function to remove a character
 function removeLastChar() {
-    displayValue = displayValue.slice(0, -1);
-    updateDisplay();
+    if (!calculationDone) {
+        displayValue = displayValue.slice(0, -1);
+        updateDisplay();
+        lastInputWasOperator = isNaN(displayValue.slice(-1)) && displayValue.slice(-1) !== '.';
+    }
 }
-//function to update the value  on display
- function updateDisplay() {
-     document.getElementById('display').value = displayValue;
- }
-//function to calculate
+
+// Function to update the value on display
+function updateDisplay() {
+    document.getElementById('display').value = displayValue;
+}
+
+// Function to perform calculations
 function calculate() {
-    if (firstOperand !== '' && displayValue !== '') {
-        secondOperand = displayValue;
-        let result = '';
-//to check if it is operator
+    let currentExpression = displayValue.split(/([+\-*/])/);  
+    let result = parseFloat(currentExpression[0]);
+
+    for (let i = 1; i < currentExpression.length; i += 2) {
+        let operator = currentExpression[i];
+        let operand = parseFloat(currentExpression[i + 1]);
+
         if (!isNaN(operand)) {
             switch (operator) {
                 case '+':
@@ -39,14 +66,23 @@ function calculate() {
                     if (operand !== 0) {
                         result /= operand;
                     } else {
-                        result = 'Error';
-                        break;
+                        displayValue= "error";
+                        updateDisplay();
+                        
+                        return;
                     }
                     break;
             }
         }
     }
-//update the display with the result
-    displayValue = result.toString();
+
+    if (!isNaN(result)) {
+        result = parseFloat(result.toFixed(17));
+        displayValue = result.toString();
+    } 
+    
     updateDisplay();
+    calculationDone = true;
 }
+
+
