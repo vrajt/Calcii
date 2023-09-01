@@ -4,7 +4,7 @@
     <!--see the viewport and title-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
     <!--Include external stylesheet and script-->
     <script src="script.js"></script>
 </head>
@@ -13,13 +13,13 @@
     <div class="calculator">
         <h1>Calculator</h1>
         <!--calculator title-->
-        <input type="text" id="display" disabled>
+        <input id="display" disabled>
         <div class="grid">
             <button onclick="clearDisplay()">AC</button>
             <button onclick="display('+')">+</button>
             <button onclick="display('-')">-</button>
-            <button onclick="removeLastChar()"><-</button>
-            <button onclick="display('7')">7</button>
+            <button onclick="removeLastChar('⌫')">⌫</button>
+             <button onclick="display('7')">7</button>
             <button onclick="display('8')">8</button>
             <button onclick="display('9')">9</button>
             <button onclick="display('*')">*</button>
@@ -30,6 +30,8 @@
             <button onclick="display('1')">1</button>
             <button onclick="display('2')">2</button>
             <button onclick="display('3')">3</button>
+            <button onclick="display('.')">.</button>
+            <button onclick="display('0')">0</button>
             <button onclick="calculate()">=</button>
         </div>
     </div>

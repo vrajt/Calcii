@@ -45,11 +45,11 @@ function updateDisplay() {
 // Function to perform calculations
 function calculate() {
     let currentExpression = displayValue.split(/([+\-*/])/);  
-    let result = parseFloat(currentExpression[0]);
+    let result = Number(currentExpression[0]);
 
     for (let i = 1; i < currentExpression.length; i += 2) {
         let operator = currentExpression[i];
-        let operand = parseFloat(currentExpression[i + 1]);
+        let operand = Number(currentExpression[i + 1]);
 
         if (!isNaN(operand)) {
             switch (operator) {
@@ -77,7 +77,7 @@ function calculate() {
     }
 
     if (!isNaN(result)) {
-        result = parseFloat(result.toFixed(17));
+        result = Number(result.toFixed(17));
         displayValue = result.toString();
     } 
     
