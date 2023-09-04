@@ -6,13 +6,15 @@ let lastInputWasOperator = false;
 let calculationDone = false; 
 
 
-// Function to add value on display
 function display(value) {
     if (calculationDone && !isNaN(value)) {
         displayValue = value;
         calculationDone = false;
     } else if (lastInputWasOperator && isNaN(value)) {
         displayValue = displayValue.slice(0, -1) + value;
+    } else if (calculationDone && isNaN(value) && value !== '.') {
+        displayValue = displayValue + value;
+        calculationDone = false;
     } else {
         displayValue += value;
     }
@@ -43,9 +45,12 @@ function updateDisplay() {
 }
 
 // Function to perform calculations
+
 function calculate() {
     let currentExpression = displayValue.split(/([+\-*/])/);  
     let result = Number(currentExpression[0]);
+
+    displayValue = '';
 
     for (let i = 1; i < currentExpression.length; i += 2) {
         let operator = currentExpression[i];
